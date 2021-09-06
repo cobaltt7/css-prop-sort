@@ -20,13 +20,13 @@ const yargs = yargsParser(hideBin(process.argv));
  *
  * @param {string} fileName - The file to load from.
  *
- * @returns {any | Promise<any>} - The loaded file.
+ * @returns {Promise<any>} - The loaded file.
  * @throws {ReferenceError} - If the filetype is unsupported.
  */
-function loadJsonOrJs(fileName) {
+async function loadJsonOrJs(fileName) {
 	switch (path.extname(fileName)) {
 		case ".json":
-			return JSON.parse(readFile(fileName, "utf8"));
+			return JSON.parse(await readFile(fileName, "utf8"));
 		case ".js":
 		case ".mjs":
 		case ".cjs":
@@ -61,7 +61,13 @@ function loadFileByFileName(file) {
 	return nothing;
 }
 
-/** @param error */
+/**
+ * Show help screen and throw an error.
+ *
+ * @param {any} error - Error to throw.
+ *
+ * @throws {Error} - The the thrown error.
+ */
 function throwError(error) {
 	yargs.showHelp("error");
 
@@ -86,16 +92,15 @@ const argv = yargs
 /** CLI entry point. */
 async function main() {
 	const CONFIG = await generateConfig(
-			configFile
-				? await loadJsonOrJs(path.resolve(process.cwd(), configFile))
-				: loadFileByFileName("package.json")?.cssPropSort ||
-						loadFileByFileName("cssPropSort.config.json") ||
-						(await loadFileByFileName("cssPropSort.config.js")) ||
-						(await loadFileByFileName("cssPropSort.config.cjs")) ||
-						(await loadFileByFileName("cssPropSort.config.mjs")) ||
-						{},
-		)
-
+		configFile
+			? await loadJsonOrJs(path.resolve(process.cwd(), configFile))
+			: loadFileByFileName("package.json")?.cssPropSort ||
+					loadFileByFileName("cssPropSort.config.json") ||
+					(await loadFileByFileName("cssPropSort.config.js")) ||
+					(await loadFileByFileName("cssPropSort.config.cjs")) ||
+					(await loadFileByFileName("cssPropSort.config.mjs")) ||
+					{},
+	);
 
 	for (const filePath of globby(globs?.length ? globs.map((value) => `${value}`) : "**.css", {
 		// Overritable properties
@@ -116,18 +121,16 @@ async function main() {
 		const relativePath = path.relative(process.cwd(), filePath);
 
 		readFile(filePath, "utf8")
-				.then((css) =>
-					sortCssProperties(css, CONFIG)
-						.then((sortedCss) =>
-							writeFile(filePath, sortedCss, "utf8")
-								.then(() => {
-									return console.log(relativePath);
-								})
-								.catch(throwError),
-						)
-						.catch(throwError),
-				)
-				.catch(throwError);
+			.then((css) =>
+				sortCssProperties(css, CONFIG)
+					.then((sortedCss) =>
+						writeFile(filePath, sortedCss, "utf8")
+							.then(() => console.log(relativePath))
+							.catch(throwError),
+					)
+					.catch(throwError),
+			)
+			.catch(throwError);
 	}
 }
 

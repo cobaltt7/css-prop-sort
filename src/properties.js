@@ -18,7 +18,8 @@ function matches(property, stringToMatch, wildcard) {
 			? replaceAll(stringToMatch, wildcard, ".*")
 			: stringToMatch
 		)
-			// Escape dashes. Ik that isn't the only character that needs escaping in regex, but it's the only one that's also allowed in prop names.
+			// Escape dashes
+			// (That isn't the only character that needs escaping in regex, but it's the only one that's also allowed in prop names)
 			.replace(/-/g, "\\-")}$`,
 		"i",
 	).test(property);
