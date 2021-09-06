@@ -23,9 +23,7 @@ If you use VSCode, it ~~should~~ will give you intellisense with descriptions of
 
 ## todos
 
--   [ ] 1: Don't output comments if only one group is in the rule.
--   [ ] 2: cli current file output like prettier
--   [ ] 3: changlog
--   [ ] 4: docs ^
--   [ ] 5: reorder margin/padding in default config. also add `box-shadow` to `manpulation`
--   [ ] 6: 1.0.0
+-   [ ] 1: reorder margin/padding in default config. also add `box-shadow` to `manpulation`
+-   [ ] 2: changlog
+-   [ ] 3: docs ^
+-   [ ] 4: 1.0.0

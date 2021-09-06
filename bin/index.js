@@ -2,7 +2,7 @@
 
 /** @file CLI To bulk sort CSS properties. */
 
-import { readFileSync as readFile, writeFileSync as writeFile } from "fs";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
 import findUp from "find-up";
@@ -14,21 +14,6 @@ import generateConfig from "../src/config.js";
 import sortCssProperties from "../src/index.js";
 
 const yargs = yargsParser(hideBin(process.argv));
-
-const argv = yargs
-		.normalize("config")
-		.options({
-			config: {
-				alias: "c",
-				describe: "Path to the configuaration file",
-				nargs: 1,
-				normalize: true,
-				type: "string",
-			},
-		})
-		.scriptName("css-prop-sort")
-		.parse(),
-	{ _: globs, config: configFile } = argv;
 
 /**
  * Load a JSON or JS file from a path.
@@ -76,18 +61,41 @@ function loadFileByFileName(file) {
 	return nothing;
 }
 
+/** @param error */
+function throwError(error) {
+	yargs.showHelp("error");
+
+	throw new Error(error);
+}
+
+const argv = yargs
+		.normalize("config")
+		.options({
+			config: {
+				alias: "c",
+				describe: "Path to the configuaration file",
+				nargs: 1,
+				normalize: true,
+				type: "string",
+			},
+		})
+		.scriptName("css-prop-sort")
+		.parse(),
+	{ _: globs, config: configFile } = argv;
+
 /** CLI entry point. */
 async function main() {
 	const CONFIG = await generateConfig(
-		configFile
-			? await loadJsonOrJs(path.resolve(process.cwd(), configFile))
-			: loadFileByFileName("package.json")?.cssPropSort ||
-					loadFileByFileName("cssPropSort.config.json") ||
-					(await loadFileByFileName("cssPropSort.config.js")) ||
-					(await loadFileByFileName("cssPropSort.config.cjs")) ||
-					(await loadFileByFileName("cssPropSort.config.mjs")) ||
-					{},
-	);
+			configFile
+				? await loadJsonOrJs(path.resolve(process.cwd(), configFile))
+				: loadFileByFileName("package.json")?.cssPropSort ||
+						loadFileByFileName("cssPropSort.config.json") ||
+						(await loadFileByFileName("cssPropSort.config.js")) ||
+						(await loadFileByFileName("cssPropSort.config.cjs")) ||
+						(await loadFileByFileName("cssPropSort.config.mjs")) ||
+						{},
+		)
+
 
 	for (const filePath of globby(globs?.length ? globs.map((value) => `${value}`) : "**.css", {
 		// Overritable properties
@@ -105,15 +113,21 @@ async function main() {
 		stats: false,
 		unique: true,
 	})) {
-		const css = readFile(filePath, "utf8");
+		const relativePath = path.relative(process.cwd(), filePath);
 
-		sortCssProperties(css, CONFIG)
-			.then((sortedCss) => writeFile(filePath, sortedCss, "utf8"))
-			.catch((error) => {
-				yargs.showHelp("error");
-
-				throw new Error(error);
-			});
+		readFile(filePath, "utf8")
+				.then((css) =>
+					sortCssProperties(css, CONFIG)
+						.then((sortedCss) =>
+							writeFile(filePath, sortedCss, "utf8")
+								.then(() => {
+									return console.log(relativePath);
+								})
+								.catch(throwError),
+						)
+						.catch(throwError),
+				)
+				.catch(throwError);
 	}
 }
 
