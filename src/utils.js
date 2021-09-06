@@ -1,3 +1,5 @@
+/** @file Miscellaneous Utility functions not specific to this project. */
+
 /**
  * Find the first property with the given name in an array of objects.
  *
@@ -39,10 +41,7 @@ export function bulkShallowMerge(...objects) {
  */
 export function replaceAll(string, find, replace, flags = "") {
 	/** Escape special characters. */
-	const escaped = find.replace(/(?<character>[!$()*+./:=?[\\\]^{|}])/g, "\\$<character>")
+	const escaped = find.replace(/(?<character>[!$()*+./:=?[\\\]^{|}])/g, "\\$<character>");
 
-	return string.replace(
-		new RegExp(escaped, `${flags}g`),
-		replace,
-	);
+	return string.replace(new RegExp(escaped, `${flags}g`), replace);
 }

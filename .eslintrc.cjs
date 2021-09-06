@@ -37,5 +37,5 @@ module.exports = {
 	],
 
 	parserOptions: { ecmaVersion: 2015 },
-	rules: { "no-console": 2, "no-throw": 0 },
+	rules: { "fp/no-throw": 0,"no-console": 2 },
 };

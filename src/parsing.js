@@ -1,6 +1,6 @@
 /**
  * @file Parsing Utils.
- * @typedef {{ comment:string,group: string; property: string; value: string }} property
+ * @typedef {{ comment: string; group: string; property: string; value: string }} property
  */
 
 import * as propertyUtil from "./properties.js";
@@ -15,24 +15,28 @@ import * as propertyUtil from "./properties.js";
  */
 export function parseProperties(rule, config) {
 	return (
-		rule
-		// Condence whitespace
-		.replace(/\s/g, " ")
-			.match(/[^;]*(?<quote>(?<!\\)(?:\\\\)*["']).*\k<quote>[^;]*|[^;]+/gsu) || []
-	).map((line) => {
-		/** @type {{comment: string,property: string,value: string}} */
-		// @ts-expect-error -- TS doesn't know what groups the RegExp will output.
-		const { comment,property,value } 	=line
-				// Split into comment,, property, and value
-				.match(/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i)?.groups||{}
+		(
+			rule
+				// Condence whitespace
+				.replace(/\s/g, " ")
+				.match(/[^;]*(?<quote>(?<!\\)(?:\\\\)*["']).*\k<quote>[^;]*|[^;]+/gsu) || []
+		).map((line) => {
+			/** @type {{ comment: string; property: string; value: string }} */
+			// @ts-expect-error -- TS doesn't know what groups the RegExp will output.
+			const { comment, property, value } =
+				line
+					// Split into comment,, property, and value
+					.match(
+						/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i,
+					)?.groups || {};
 
-		return {
-			comment,
-			group: propertyUtil.getGroup(property, config),
-			property,
-			value,
-		};
-	}
+			return {
+				comment,
+				group: propertyUtil.getGroup(property, config),
+				property,
+				value,
+			};
+		})
 	);
 }
 
@@ -74,7 +78,9 @@ export function propertiesToCss(properties, config) {
 					property.group === array[index - 1]?.group
 						? ""
 						: `${config.comment(property.group)}\n`
-				}${property.comment?`${property.comment}\n`:property.comment}${property.property}:${property.value};\n`,
+				}${property.comment ? `${property.comment}\n` : property.comment}${
+					property.property
+				}:${property.value};\n`,
 		)
 		.join("")
 		.trim();
