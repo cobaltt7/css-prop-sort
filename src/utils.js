@@ -1,4 +1,4 @@
-/** @file Miscellaneous Utility functions not specific to this project. */
+/** @file Miscellaneous Utility functions not specific to this project, many of which are stolen from the web. */
 
 /**
  * Find the first property with the given name in an array of objects.
@@ -62,4 +62,29 @@ export function allEqual(array, property) {
 			? item === array[0]
 			: item[`${property}`] === array[0][`${property}`],
 	);
+}
+
+/**
+ * Returns the index of the last element in the array where predicate is true, and -1 otherwise.
+ *
+ * @author [Nico Timmerman](https://stackoverflow.com/users/6870494/nico-timmerman)'s
+ *   [answer](https://stackoverflow.com/a/53187807/11866686) to [`Find last index of element inside
+ *   array by certain condition`](https://stackoverflow.com/q/40929260/11866686).
+ * @template T
+ * @param {T[]} array - The source array to search in.
+ * @param {(value: T, index: number, obj: T[]) => boolean} predicate - Find calls predicate once for
+ *   each element of the array, in descending order, until it finds one where predicate returns
+ *   true. If such an element is found, findLastIndex immediately returns that element index.
+ *   Otherwise, findLastIndex returns -1.
+ * @param {any} [thisArgument] - If provided, it will be used as the this value for each invocation
+ *   of predicate. If it is not provided, undefined is used instead.
+ *
+ * @returns {number} - Returns the index of the found element, else -1.
+ */
+export function findLastIndex(array, predicate, thisArgument) {
+	let index = array.length;
+
+	while (index--) if (predicate.call(thisArgument, array[+index], index, array)) return index;
+
+	return -1;
 }

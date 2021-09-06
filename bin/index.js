@@ -65,7 +65,6 @@ function loadFileByFileName(file) {
  * Show help screen and throw an error.
  *
  * @param {any} error - Error to throw.
- *
  * @throws {Error} - The the thrown error.
  */
 function throwError(error) {

@@ -23,7 +23,6 @@ If you use VSCode, it ~~should~~ will give you intellisense with descriptions of
 
 ## todos
 
--   [ ] 1: reorder margin/padding in default config.
--   [ ] 2: changlog
--   [ ] 3: docs ^
--   [ ] 4: 1.0.0
+-   [ ] changlog
+-   [ ] docs ^
+-   [ ] 1.0.0

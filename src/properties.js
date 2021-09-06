@@ -1,6 +1,6 @@
 /** @file Property Utils. */
 
-import { replaceAll } from "./utils.js";
+import { findLastIndex, replaceAll } from "./utils.js";
 
 /**
  * Determines whether a property matches a string potentially containing a wildcard.
@@ -58,8 +58,8 @@ export function getIndex(propertyToFind, CONFIG) {
 	const allProperties = CONFIG.groups.flatMap(([, properties]) => properties);
 
 	return (
-		Array.from(allProperties.entries()).find(([, propertyToMatch]) =>
+		findLastIndex(allProperties, (propertyToMatch) =>
 			matches(propertyToFind, propertyToMatch, CONFIG.wildcard),
-		)?.[0] || Number.POSITIVE_INFINITY
+		) || Number.POSITIVE_INFINITY
 	);
 }
