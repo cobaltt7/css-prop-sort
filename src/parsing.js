@@ -20,24 +20,27 @@ export function parseProperties(rule, config) {
 				// Condence whitespace
 				.replace(/\s/g, " ")
 				.match(/[^;]*(?<quote>(?<!\\)(?:\\\\)*["']).*\k<quote>[^;]*|[^;]+/gsu) || []
-		).map((line) => {
-			/** @type {{ comment: string; property: string; value: string }} */
+		).reduce((/** @type {property[]} */accumulated,line) => {
+			/** @type {{ comment: string; property: string; value: string }|undefined} */
 			// @ts-expect-error -- TS doesn't know what groups the RegExp will output.
-			const { comment, property, value } =
+			const propertyMetadata =
 				line
-					// Split into comment,, property, and value
+					// Split into comment, property, and value
 					.match(
-						/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i,
-					)?.groups || {};
+						/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:\s*(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i,
+					)?.groups;
 
-			return {
-				comment,
-				group: propertyUtil.getGroup(property, config),
-				property,
-				value,
-			};
-		})
-	);
+			if(!propertyMetadata) return accumulated
+
+			return [...accumulated, {
+				comment: propertyMetadata.comment,
+				group: propertyUtil.getGroup(propertyMetadata.property, config),
+				property: propertyMetadata.property,
+				value: propertyMetadata.value,
+			}];
+		},
+			[])
+	)
 }
 
 /**
