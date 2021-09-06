@@ -23,7 +23,7 @@ If you use VSCode, it ~~should~~ will give you intellisense with descriptions of
 
 ## todos
 
--   [ ] 1: reorder margin/padding in default config. also add `box-shadow` to `manpulation`
+-   [ ] 1: reorder margin/padding in default config.
 -   [ ] 2: changlog
 -   [ ] 3: docs ^
 -   [ ] 4: 1.0.0

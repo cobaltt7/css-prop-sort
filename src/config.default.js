@@ -117,6 +117,7 @@ const config = {
 				"backface-visibility",
 				"image-orientation",
 				"mix-blend-mode",
+				"box-shadow",
 				"shape-*",
 				"scroll-*",
 				"overscroll-*",
