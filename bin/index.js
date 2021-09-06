@@ -7,13 +7,15 @@ import path from "path";
 
 import findUp from "find-up";
 import { sync as globby } from "globby";
-import yargs from "yargs";
+import yargsParser from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import generateConfig from "../src/config.js";
 import sortCssProperties from "../src/index.js";
 
-const argv = yargs(hideBin(process.argv))
+const yargs = yargsParser(hideBin(process.argv));
+
+const argv =yargs
 		.normalize("config")
 		.options({
 			config: {
@@ -104,6 +106,7 @@ async function main() {
 		unique: true,
 	})) {
 		const css = readFile(filePath, "utf8");
+
 
 		sortCssProperties(css, CONFIG)
 			.then((sortedCss) => writeFile(filePath, sortedCss, "utf8"))
