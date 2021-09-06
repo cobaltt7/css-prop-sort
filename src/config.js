@@ -52,22 +52,22 @@ export default async function mergeConfigs(...configs) {
 	if (typeof lastConfig.extend === "string")
 		return mergeConfigs(...configs, await import(lastConfig.extend));
 
-	// If `lastConfig.extend` is false, merge all configs.
-	// Otherwise, it must be true or undefined. Merge with the default config.
+	// If `lastConfig.extend` is not false, it must be true or undefined. Merge with the default config.
+	if (lastConfig.extend !== false) return mergeConfigs(...configs, defaultConfig);
+
+	// If it is false, merge all configs.
 	const defaultGroup = findFirst("defaultGroup", configs) || defaultConfig.defaultGroup,
 		wildcard = findFirst("wildcard", configs) || defaultConfig.wildcard;
 
 	if (/[\w-]/.test(wildcard))
 		throw new SyntaxError(`Invalid config. The wildcard ${wildcard} is invalid`);
 
-	return lastConfig.extend === false
-		? {
-				comment: findFirst("comment", configs) || defaultConfig.comment,
-				defaultGroup,
-				extend: false,
-				glob: bulkShallowMerge(...configs.map(({ glob }) => glob)) || defaultConfig.glob,
-				groups: mergeGroups(defaultGroup, ...configs.map(({ groups }) => groups || [])),
-				wildcard,
-		  }
-		: mergeConfigs(...configs, defaultConfig);
+	return {
+		comment: findFirst("comment", configs) || defaultConfig.comment,
+		defaultGroup,
+		extend: false,
+		glob: bulkShallowMerge(...configs.map(({ glob }) => glob)) || defaultConfig.glob,
+		groups: mergeGroups(defaultGroup, ...configs.map(({ groups }) => groups || [])),
+		wildcard,
+	};
 }
