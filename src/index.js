@@ -17,7 +17,7 @@ function removeGroupComments(css, config) {
 
 	return groups.reduce(
 		(partiallyReplacedCss, group) =>
-			replaceAll(partiallyReplacedCss, config.comment(group[0]).trim(), ""),
+			replaceAll(partiallyReplacedCss, config.comment(group[0],config).trim(), ""),
 		css,
 	);
 }
@@ -36,5 +36,3 @@ export default async function sortCssProperties(css, config) {
 		(rule) => propertiesToCss(sortProperties(parseProperties(rule, config), config), config),
 	);
 }
-
-// /(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/gi

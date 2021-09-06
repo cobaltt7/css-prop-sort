@@ -2,7 +2,7 @@
 
 /** @type {import("../types").RawConfig} */
 const config = {
-	comment: (group) => (group === "priority" ? "" : `\n/* ${group} *\/`),
+	comment: (group, { groups }) => (group === groups[1][0] ? "" : `\n/* ${group} *\/`),
 
 	defaultGroup: "miscellaneous",
 

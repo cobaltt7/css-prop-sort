@@ -20,27 +20,28 @@ export function parseProperties(rule, config) {
 				// Condence whitespace
 				.replace(/\s/g, " ")
 				.match(/[^;]*(?<quote>(?<!\\)(?:\\\\)*["']).*\k<quote>[^;]*|[^;]+/gsu) || []
-		).reduce((/** @type {property[]} */accumulated,line) => {
-			/** @type {{ comment: string; property: string; value: string }|undefined} */
+		).reduce((/** @type {property[]} */ accumulated, line) => {
+			/** @type {{ comment: string; property: string; value: string } | undefined} */
 			// @ts-expect-error -- TS doesn't know what groups the RegExp will output.
-			const propertyMetadata =
-				line
-					// Split into comment, property, and value
-					.match(
-						/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:\s*(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i,
-					)?.groups;
+			const propertyMetadata = line
+				// Split into comment, property, and value
+				.match(
+					/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:\s*(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i,
+				)?.groups;
 
-			if(!propertyMetadata) return accumulated
+			if (!propertyMetadata) return accumulated;
 
-			return [...accumulated, {
-				comment: propertyMetadata.comment,
-				group: propertyUtil.getGroup(propertyMetadata.property, config),
-				property: propertyMetadata.property,
-				value: propertyMetadata.value,
-			}];
-		},
-			[])
-	)
+			return [
+				...accumulated,
+				{
+					comment: propertyMetadata.comment,
+					group: propertyUtil.getGroup(propertyMetadata.property, config),
+					property: propertyMetadata.property,
+					value: propertyMetadata.value,
+				},
+			];
+		}, [])
+	);
 }
 
 /**
@@ -80,7 +81,7 @@ export function propertiesToCss(properties, config) {
 				`${
 					property.group === array[index - 1]?.group
 						? ""
-						: `${config.comment(property.group)}\n`
+						: `${config.comment(property.group,config)}\n`
 				}${property.comment ? `${property.comment}\n` : property.comment}${
 					property.property
 				}:${property.value};\n`,
