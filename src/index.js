@@ -1,6 +1,23 @@
 /** @file Sort CSS properties. */
 
 import { propertiesToCss, sortProperties, parseProperties } from "./parsing.js";
+import { replaceAll } from "./utils.js";
+
+/**
+ * Replace all generated comments denoting group boundries.
+ *
+ * @param {string} css - The CSS to replace group comments in.
+ * @param {import("../types").RawConfig} config - The configuration to use.
+ * @returns {string} - The CSS without group comments.
+ */
+function removeGroupComments(css, config) {
+const groups=[...config.groups.slice(1),[config.defaultGroup,[]]]
+
+	return groups.reduce(
+		(partiallyReplacedCss, group) => replaceAll(partiallyReplacedCss, config.comment(group[0]).trim(), ""),
+		css,
+	);
+}
 
 /**
  * Sort CSS properties.
@@ -11,8 +28,10 @@ import { propertiesToCss, sortProperties, parseProperties } from "./parsing.js";
  * @returns {Promise<string>} - The sorted CSS.
  */
 export default async function sortCssProperties(css, config) {
-	return css.replace(
-		/(?<={)(?:\s*[_a-z-]+\s*:(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+;?)+/gi,
+	return removeGroupComments(css,config).replace(
+		/(?<={)(?:(?:\/\*.*\*\/)*\s*[_a-z-]+\s*:(?:\\"|\\'|[^"';}]|(?<quote>(?<!\\)(?:\\\\)*["']).*\k<quote>[^;]*)+;?\s*)+/gi,
 		(rule) => propertiesToCss(sortProperties(parseProperties(rule, config), config), config),
 	);
 }
+
+// /(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/gi

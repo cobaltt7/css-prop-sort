@@ -38,12 +38,11 @@ export function bulkShallowMerge(...objects) {
  * @returns {string} - The replaced string.
  */
 export function replaceAll(string, find, replace, flags = "") {
+	/** Escape special characters. */
+	const escaped = find.replace(/(?<character>[!$()*+./:=?[\\\]^{|}])/g, "\\$<character>")
+
 	return string.replace(
-		new RegExp(
-			// Escape special characters
-			find.replace(/(?<character>[!$()*+./:=?[\\\]^{|}])/g, "\\$<character>"),
-			`${flags}g`,
-		),
+		new RegExp(escaped, `${flags}g`),
 		replace,
 	);
 }

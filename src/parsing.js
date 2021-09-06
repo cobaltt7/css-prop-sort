@@ -1,25 +1,9 @@
 /**
  * @file Parsing Utils.
- * @typedef {{ group: string; property: string; value: string }} property
+ * @typedef {{ comment:string,group: string; property: string; value: string }} property
  */
 
 import * as propertyUtil from "./properties.js";
-
-/**
- * Convert an object entry to an objects of metadata.
- *
- * @param {[string, string]} arg0 - The object entry.
- * @param {import("../types").RawConfig} config - The configuration to use.
- *
- * @returns {property} - The array of objects.
- */
-function ruleEntryToObject([property, value], config) {
-	return {
-		group: propertyUtil.getGroup(property, config),
-		property,
-		value,
-	};
-}
 
 /**
  * Find all properties.
@@ -32,22 +16,23 @@ function ruleEntryToObject([property, value], config) {
 export function parseProperties(rule, config) {
 	return (
 		rule
-			.replace(/;\s*$/, "")
+		// Condence whitespace
+		.replace(/\s/g, " ")
 			.match(/[^;]*(?<quote>(?<!\\)(?:\\\\)*["']).*\k<quote>[^;]*|[^;]+/gsu) || []
-	).map((line) =>
-		ruleEntryToObject(
-			// @ts-expect-error -- The regex ensures the string is only split once, so the resulting array must have exatly 2 items.
-			line
-				// Condence whitespace
-				.replace(/\s/g, " ")
-				// Split into property name and value
-				.split(/(?<=^[^:]+):/)
-				.map((properyOrValue) =>
-					// Trim whitespace
-					properyOrValue.trim(),
-				),
-			config,
-		),
+	).map((line) => {
+		/** @type {{comment: string,property: string,value: string}} */
+		// @ts-expect-error -- TS doesn't know what groups the RegExp will output.
+		const { comment,property,value } 	=line
+				// Split into comment,, property, and value
+				.match(/(?<comment>(?:\/\*.*\*\/\s*)*)(?<property>[_a-z-]+)\s*:(?<value>(?:\\".*\\"|[^";}]|(?<!\\)"(?:(?:[^"]|[^\\]")*?[^\\])?")+)/i)?.groups||{}
+
+		return {
+			comment,
+			group: propertyUtil.getGroup(property, config),
+			property,
+			value,
+		};
+	}
 	);
 }
 
@@ -89,7 +74,7 @@ export function propertiesToCss(properties, config) {
 					property.group === array[index - 1]?.group
 						? ""
 						: `${config.comment(property.group)}\n`
-				}${property.property}: ${property.value};\n`,
+				}${property.comment?`${property.comment}\n`:property.comment}${property.property}:${property.value};\n`,
 		)
 		.join("")
 		.trim();

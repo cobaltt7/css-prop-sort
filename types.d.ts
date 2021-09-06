@@ -17,7 +17,7 @@ export interface RawConfig {
 	/**
 	 * Function to generate comments.
 	 *
-	 * @defaultValue (group) => `\n/* ${group} *\/`
+	 * @defaultValue (group) => \`\n/* ${group} *\/\`
 	 */
 	comment: ConfigTypes.comment;
 	/**

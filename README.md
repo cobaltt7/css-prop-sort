@@ -19,11 +19,12 @@ const config = {
 export default config;
 ```
 
-If you use VSCode, it ~~will~~ should give you intellisense with descriptions of each property.
+If you use VSCode, it ~~should~~ will give you intellisense with descriptions of each property.
 
 ## next steps
 
 todo 1: comments break it. idea: remove any comments that match a group name. then move the remaining comments around with the property below it. the latter should just be tweaking the regex.
 todo 2: Don't output comments if only one group is in the rule.
 todo 3: cli current file output like prettier
-todo 4: custom parsers?
+todo 4: reorder margin/padding in default config
+todo 5: 1.0.0
