@@ -45,3 +45,21 @@ export function replaceAll(string, find, replace, flags = "") {
 
 	return string.replace(new RegExp(escaped, `${flags}g`), replace);
 }
+
+/**
+ * Determine whether an array contains duplicates.
+ *
+ * @author [TC5550](https://www.codegrepper.com/profile/alfons-nilsson)'s Answer to `check if array
+ *   has same values javascript`.
+ * @param {any[]} array - The array to search.
+ * @param {string} [property] - If `array` is an array of objects, the property to check on the object.
+ *
+ * @returns {boolean} - Whether the array contains any duplcates.
+ */
+export function allEqual(array, property) {
+	return array.every((item) =>
+		typeof property === "undefined"
+			? item === array[0]
+			: item[`${property}`] === array[0][`${property}`],
+	);
+}

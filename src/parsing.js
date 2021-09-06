@@ -4,6 +4,7 @@
  */
 
 import * as propertyUtil from "./properties.js";
+import { allEqual } from "./utils.js";
 
 /**
  * Find all properties.
@@ -75,17 +76,18 @@ export function sortProperties(properties, config) {
  * @returns {string} - The CSS string.
  */
 export function propertiesToCss(properties, config) {
+	const hasSingleGroup = allEqual(properties, "group");
+
 	return properties
-		.map(
-			(property, index, array) =>
-				`${
-					property.group === array[index - 1]?.group
+		.map((property, index, array) => {
+			const groupComment =
+					hasSingleGroup || property.group === array[index - 1]?.group
 						? ""
-						: `${config.comment(property.group,config)}\n`
-				}${property.comment ? `${property.comment}\n` : property.comment}${
-					property.property
-				}:${property.value};\n`,
-		)
+						: `${config.comment(property.group, config)}\n`,
+				propertyComment = property.comment ? `${property.comment}\n` : "";
+
+			return `${groupComment}${propertyComment}${property.property}: ${property.value};\n`;
+		})
 		.join("")
 		.trim();
 }

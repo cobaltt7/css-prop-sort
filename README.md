@@ -21,9 +21,11 @@ export default config;
 
 If you use VSCode, it ~~should~~ will give you intellisense with descriptions of each property.
 
-## next steps
+## todos
 
--   [ ] todo 1: Don't output comments if only one group is in the rule.
--   [ ] todo 2: cli current file output like prettier
--   [ ] todo 3: reorder margin/padding in default config
--   [ ] todo 4: 1.0.0
+-   [ ] 1: Don't output comments if only one group is in the rule.
+-   [ ] 2: cli current file output like prettier
+-   [ ] 3: changlog
+-   [ ] 4: docs ^
+-   [ ] 5: reorder margin/padding in default config. also add `box-shadow` to `manpulation`
+-   [ ] 6: 1.0.0

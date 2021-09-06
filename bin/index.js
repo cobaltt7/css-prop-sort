@@ -15,7 +15,7 @@ import sortCssProperties from "../src/index.js";
 
 const yargs = yargsParser(hideBin(process.argv));
 
-const argv =yargs
+const argv = yargs
 		.normalize("config")
 		.options({
 			config: {
@@ -106,7 +106,6 @@ async function main() {
 		unique: true,
 	})) {
 		const css = readFile(filePath, "utf8");
-
 
 		sortCssProperties(css, CONFIG)
 			.then((sortedCss) => writeFile(filePath, sortedCss, "utf8"))

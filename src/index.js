@@ -17,7 +17,7 @@ function removeGroupComments(css, config) {
 
 	return groups.reduce(
 		(partiallyReplacedCss, group) =>
-			replaceAll(partiallyReplacedCss, config.comment(group[0],config).trim(), ""),
+			replaceAll(partiallyReplacedCss, config.comment(group[0], config).trim(), ""),
 		css,
 	);
 }
