@@ -1,6 +1,6 @@
 {
 	"name": "css-prop-sort",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "CLI to easily sort your CSS properties",
 	"keywords": ["css", "sort", "lint", "cli"],
 	"bugs": {

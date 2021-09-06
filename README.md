@@ -21,9 +21,9 @@ export default config;
 
 If you use VSCode, it ~~will~~ should give you intellisense with descriptions of each property.
 
-## TODO:
+## next steps
 
--   [ ] comments break it. idea: remove any comments that match a group name. then move the remaining comments around with the property below it. the latter should just be tweaking the regex.
--   [ ] custom parsers?
--   [ ] Don't output comments if only one group is in the rule.
--   [ ] cli current file output like prettier
+todo 1: comments break it. idea: remove any comments that match a group name. then move the remaining comments around with the property below it. the latter should just be tweaking the regex.
+todo 2: Don't output comments if only one group is in the rule.
+todo 3: cli current file output like prettier
+todo 4: custom parsers?
