@@ -1,0 +1,110 @@
+{
+	"name": "css-prop-sort",
+	"version": "0.0.1",
+	"description": "CLI to easily sort your CSS properties",
+	"keywords": ["css", "sort", "lint", "cli"],
+	"bugs": {
+		"url": "https://github.com/RedGuy12/css-prop-sort/issues",
+		"email": "paul@reid-family.org"
+	},
+	"license": "MIT",
+	"author": "RedGuy12",
+	"main": "src/index.js",
+	"bin": {
+		"css-prop-sort": "bin/index.js"
+	},
+	"type": "module",
+	"scripts": {
+		"lint": "npm run lint:prettier && npm run lint:typescript && npm run lint:eslint && echo Success",
+		"lint:eslint": "eslint --fix --cache .",
+		"lint:prettier": "prettier --write --ignore-unknown **",
+		"lint:typescript": "tsc --project jsconfig.json"
+	},
+	"prettier": {
+		"printWidth": 100,
+		"proseWrap": "always",
+		"quoteProps": "consistent",
+		"tabWidth": 4,
+		"trailingComma": "all",
+		"useTabs": true,
+		"jsdocDescriptionWithDot": true,
+		"jsdocPrintWidth": 100,
+		"jsdocSeparateReturnsFromParam": true,
+		"jsxBracketSameLine": false,
+		"vueIndentScriptAndStyle": true,
+		"overrides": [
+			{
+				"files": ["**.md"],
+				"options": {
+					"trailingComma": "es5",
+					"proseWrap": "never",
+					"parser": "markdown"
+				}
+			},
+			{
+				"files": ["**.json", "**.map"],
+				"options": {
+					"parser": "json"
+				}
+			},
+			{
+				"files": [
+					"**.code-workspace",
+					".code-snippets",
+					"**/settings.json",
+					"**/launch.json",
+					"**/extensions.json",
+					"**.jsonc",
+					"**.eslintrc",
+					"**.eslintrc.json",
+					"jsconfig.json"
+				],
+				"options": {
+					"parser": "json5",
+					"quoteProps": "preserve",
+					"trailingComma": "none"
+				}
+			}
+		],
+		"plugins": ["prettier-plugin-jsdoc"]
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/RedGuy12/css-prop-sort.git"
+	},
+	"dependencies": {
+		"find-up": "^5.0.0",
+		"globby": "^11.0.4",
+		"yargs": "^17.1.1"
+	},
+	"devDependencies": {
+		"@onedotprojects/eslint-plugin": "^2.1.1",
+		"@types/node": "^16.7.10",
+		"@types/yargs": "^15.0.14",
+		"eslint": "^7.32.0",
+		"eslint-config-hardcore": "^20.3.0",
+		"eslint-plugin-compat": "^3.12.0",
+		"eslint-plugin-eslint-comments": "^3.2.0",
+		"eslint-plugin-html": "^6.1.2",
+		"eslint-plugin-import": "^2.24.0",
+		"eslint-plugin-jsdoc": "^36.0.7",
+		"eslint-plugin-markdown": "^2.2.0",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^5.1.0",
+		"eslint-plugin-regexp": "^1.0.0",
+		"eslint-plugin-sonarjs": "^0.10.0",
+		"eslint-plugin-unicorn": "^35.0.0",
+		"prettier": "^2.3.2",
+		"prettier-plugin-jsdoc": "^0.3.24",
+		"typescript": "^4.4.2"
+	},
+	"engines": {
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+	},
+	"browserslist": [
+		"last 2 versions",
+		"not dead",
+		"maintained node versions",
+		"unreleased versions"
+	]
+}

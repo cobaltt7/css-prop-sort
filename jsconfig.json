@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"checkJs": true,
+		"noEmit": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"strict": true,
+		"pretty": true,
+		"lib": ["es2015"],
+		"alwaysStrict": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"forceConsistentCasingInFileNames": true,
+		"allowSyntheticDefaultImports": true,
+		"module": "es2020",
+		"target": "es2015",
+		"noUnusedParameters": true,
+		"maxNodeModuleJsDepth": 0
+	},
+	"exclude": ["node_modules"],
+	"typeAcquisition": { "enable": true },
+	"include": ["./*", "./**/*", "./.*/**/*"]
+}
