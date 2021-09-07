@@ -60,6 +60,6 @@ export function getIndex(propertyToFind, CONFIG) {
 	return (
 		findLastIndex(allProperties, (propertyToMatch) =>
 			matches(propertyToFind, propertyToMatch, CONFIG.wildcard),
-		) || Number.POSITIVE_INFINITY
+		)+1 || Number.POSITIVE_INFINITY
 	);
 }
