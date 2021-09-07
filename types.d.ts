@@ -16,7 +16,13 @@ export interface RawConfig {
 	extend: false;
 
 	/**
-	 * Function to generate comments.
+	 * Function to generate comments. Alternatively, this may be an array with two items: what to
+	 * put before the comment, and what to put after. (Note that arrays are not supported with
+	 * `extend: false`.)
+	 *
+	 * @example
+	 * 	-- Array version
+	 * 	["\n/* "," *\/"]
 	 *
 	 * @defaultValue (group, { groups }) => (group === groups[1][0] ? "" : \`\n/* ${group} *\/\`)
 	 */
@@ -57,6 +63,7 @@ export interface RawConfig {
 
 interface CustomConfig extends makeOptional<RawConfig> {
 	extend?: true | string;
+	comment?: ConfigTypes.comment | [string, string];
 }
 
 export type Config = RawConfig | CustomConfig;

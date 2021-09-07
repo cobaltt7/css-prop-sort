@@ -56,14 +56,19 @@ export default async function mergeConfigs(...configs) {
 	if (lastConfig.extend !== false) return mergeConfigs(...configs, defaultConfig);
 
 	// If it is false, merge all configs.
-	const defaultGroup = findFirst("defaultGroup", configs) || defaultConfig.defaultGroup,
+	const comment = findFirst("comment", configs) || defaultConfig.comment,
+		defaultGroup = findFirst("defaultGroup", configs) || defaultConfig.defaultGroup,
 		wildcard = findFirst("wildcard", configs) || defaultConfig.wildcard;
 
 	if (/[\w-]/.test(wildcard))
 		throw new SyntaxError(`Invalid config. The wildcard ${wildcard} is invalid`);
 
 	return {
-		comment: findFirst("comment", configs) || defaultConfig.comment,
+		comment:
+			typeof comment === "function"
+				? comment
+				: (group) => `${comment[0]}${group}${comment[1]}`,
+
 		defaultGroup,
 		extend: false,
 		glob: bulkShallowMerge(...configs.map(({ glob }) => glob)) || defaultConfig.glob,
