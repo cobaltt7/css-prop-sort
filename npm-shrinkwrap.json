@@ -13,7 +13,7 @@
 				"yargs": "^17.1.1"
 			},
 			"bin": {
-				"css-prop-sort": "bin/index.js"
+				"css-prop-sort": "src/bin.js"
 			},
 			"devDependencies": {
 				"@onedotprojects/eslint-plugin": "^2.2.0",

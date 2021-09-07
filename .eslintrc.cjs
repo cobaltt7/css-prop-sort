@@ -16,7 +16,7 @@ module.exports = {
 		},
 		{
 			extends: ["plugin:@onedotprojects/config"],
-			files: ["bin/**.js", "bin/*.js", ".github/workflows/*.js"],
+			files: ["src/bin.js", ".github/workflows/*.js"],
 
 			rules: { "no-console": 0 },
 		},

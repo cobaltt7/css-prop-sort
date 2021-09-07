@@ -10,8 +10,8 @@ import { sync as globby } from "globby";
 import yargsParser from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import generateConfig from "../src/config.js";
-import sortCssProperties from "../src/index.js";
+import generateConfig from "./config.js";
+import sortCssProperties from "./index.js";
 
 const yargs = yargsParser(hideBin(process.argv));
 

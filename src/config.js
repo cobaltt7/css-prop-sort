@@ -6,10 +6,10 @@ import { bulkShallowMerge, findFirst } from "./utils.js";
 /**
  * Merge multiple property groups into one.
  *
- * @param {import("../types").ConfigTypes.defaultGroup} defaultGroup - The name of the default group.
- * @param {...import("../types").ConfigTypes.groups} groupsArray - The groups to merge.
+ * @param {import("../types").RawConfigTypes.defaultGroup} defaultGroup - The name of the default group.
+ * @param {...import("../types").RawConfigTypes.groups} groupsArray - The groups to merge.
  *
- * @returns {import("../types").ConfigTypes.groups} - The merged groups.
+ * @returns {import("../types").RawConfigTypes.groups} - The merged groups.
  */
 function mergeGroups(defaultGroup, ...groupsArray) {
 	return groupsArray.reduce((accumulated, current) => {

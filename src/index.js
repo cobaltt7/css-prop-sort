@@ -12,7 +12,7 @@ import { replaceAll } from "./utils.js";
  * @returns {string} - The CSS without group comments.
  */
 function removeGroupComments(css, config) {
-	/** @type {import("../types").ConfigTypes.groups} */
+	/** @type {import("../types").RawConfigTypes.groups} */
 	const groups = [...config.groups.slice(1), [config.defaultGroup, []]];
 
 	return groups.reduce(

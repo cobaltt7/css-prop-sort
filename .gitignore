@@ -4,7 +4,7 @@
 **.scss
 **.less
 
-.git/
+.git
 
 # Logs
 .bashrc
@@ -14,7 +14,7 @@ npm-debug.log*
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Dependency directories
-node_modules/
+node_modules
 
 # Optional npm cache directory
 .npm

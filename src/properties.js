@@ -7,8 +7,8 @@ import { findLastIndex, replaceAll } from "./utils.js";
  *
  * @param {string} property - The property to match.
  * @param {string} stringToMatch - The string to match against.
- * @param {import("../types").ConfigTypes.wildcard} [wildcard] - An optional wildcard to expand in
- *   `stringToMatch`.
+ * @param {import("../types").RawConfigTypes.wildcard} [wildcard] - An optional wildcard to expand
+ *   in `stringToMatch`.
  *
  * @returns {boolean} - Whether the property matches.
  */
@@ -60,6 +60,6 @@ export function getIndex(propertyToFind, CONFIG) {
 	return (
 		findLastIndex(allProperties, (propertyToMatch) =>
 			matches(propertyToFind, propertyToMatch, CONFIG.wildcard),
-		)+1 || Number.POSITIVE_INFINITY
+		) + 1 || Number.POSITIVE_INFINITY
 	);
 }

@@ -1,6 +1,6 @@
 {
 	"name": "css-prop-sort",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"description": "CLI to easily sort your CSS properties",
 	"keywords": [
 		"css",
@@ -16,7 +16,7 @@
 	"author": "RedGuy12",
 	"main": "src/index.js",
 	"bin": {
-		"css-prop-sort": "bin/index.js"
+		"css-prop-sort": "src/bin.js"
 	},
 	"type": "module",
 	"scripts": {
