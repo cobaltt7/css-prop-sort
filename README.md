@@ -23,6 +23,7 @@ If you use VSCode, it ~~should~~ will give you intellisense with descriptions of
 
 ## todos
 
+-   [ ] json config files won't work bc `comment` is a function now. add back the ability for it to be an array.
 -   [ ] changlog
 -   [ ] docs ^
 -   [ ] 1.0.0

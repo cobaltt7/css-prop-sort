@@ -2,7 +2,12 @@
 	"name": "css-prop-sort",
 	"version": "0.1.0",
 	"description": "CLI to easily sort your CSS properties",
-	"keywords": ["css", "sort", "lint", "cli"],
+	"keywords": [
+		"css",
+		"sort",
+		"lint",
+		"cli"
+	],
 	"bugs": {
 		"url": "https://github.com/RedGuy12/css-prop-sort/issues",
 		"email": "paul@reid-family.org"
@@ -34,7 +39,9 @@
 		"vueIndentScriptAndStyle": true,
 		"overrides": [
 			{
-				"files": ["**.md"],
+				"files": [
+					"**.md"
+				],
 				"options": {
 					"trailingComma": "es5",
 					"proseWrap": "never",
@@ -42,7 +49,10 @@
 				}
 			},
 			{
-				"files": ["**.json", "**.map"],
+				"files": [
+					"**.json",
+					"**.map"
+				],
 				"options": {
 					"parser": "json"
 				}
@@ -66,7 +76,9 @@
 				}
 			}
 		],
-		"plugins": ["prettier-plugin-jsdoc"]
+		"plugins": [
+			"prettier-plugin-jsdoc"
+		]
 	},
 	"repository": {
 		"type": "git",
@@ -78,7 +90,7 @@
 		"yargs": "^17.1.1"
 	},
 	"devDependencies": {
-		"@onedotprojects/eslint-plugin": "^2.1.1",
+		"@onedotprojects/eslint-plugin": "^2.2.0",
 		"@types/node": "^16.7.10",
 		"@types/yargs": "^15.0.14",
 		"eslint": "^7.32.0",

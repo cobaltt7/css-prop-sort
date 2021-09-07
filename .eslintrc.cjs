@@ -15,9 +15,14 @@ module.exports = {
 			files: ["*.js", "**.js", "*.mjs", "**.mjs"],
 		},
 		{
+			extends: ["plugin:@onedotprojects/config"],
 			files: ["bin/**.js", "bin/*.js", ".github/workflows/*.js"],
 
 			rules: { "no-console": 0 },
+		},
+		{
+			extends: ["plugin:@onedotprojects/config"],
+			files: [".eslintrc.cjs", "src/config.default.js"],
 		},
 		{
 			files: [".github/workflows/*.js"],
