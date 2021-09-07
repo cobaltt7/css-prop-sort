@@ -12,7 +12,7 @@ const config = {
 
 	groups: [
 		["", []],
-		["priority", ["all", "-*", "content"]],
+		["priority", ["all", "--*", "content"]],
 		[
 			"display",
 			[
