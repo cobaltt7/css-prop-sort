@@ -120,15 +120,13 @@ async function main() {
 		const relativePath = path.relative(process.cwd(), filePath);
 
 		readFile(filePath, "utf8")
-			.then((css) =>
-				sortCssProperties(css, CONFIG)
-					.then((sortedCss) =>
-						writeFile(filePath, sortedCss, "utf8")
-							.then(() => console.log(relativePath))
-							.catch(throwError),
-					)
-					.catch(throwError),
-			)
+			.then((css) => {
+				const sortedCss = sortCssProperties(css, CONFIG);
+
+				return writeFile(filePath, sortedCss, "utf8")
+					.then(() => console.log(relativePath))
+					.catch(throwError);
+			})
 			.catch(throwError);
 	}
 }
