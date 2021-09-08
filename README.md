@@ -18,7 +18,7 @@ Requires a Node.JS version `^14.13.1 || >=16.0.0`.
 npx css-prop-sort <file>
 ```
 
-where `<files>` is a glob pattern with files to sort properties in. Note it must be a glob pattern to _files_, not directories. Default: `**.css` which matches all CSS files in the CWD recursively. You can separate multiple patterns with spaces.
+where `<files>` is a glob pattern with files to sort properties in. Note it must be a glob pattern to _files_, not directories. You can separate multiple patterns with spaces. Default: `**.css`, which matches all CSS files in the CWD recursively.
 
 The optional argument `-c` or `--config` can be used to specify a configuration file. If you do not specify a configuration file, it will search upwards for a `package.json` file with a `cssPropSort` propery. If it is not found, it will search upwards for each of the following and use the first one it finds: `cssPropSort.config.json` `cssPropSort.config.js` `cssPropSort.config.cjs` `cssPropSort.config.mjs`. If none of those are found, the default configuration will be used. To force it to use the default configuration, add `"cssPropSort": {}` to your package.json file.
 
@@ -40,7 +40,7 @@ sortCssProperties(
 );
 ```
 
-Both parameters are _required_.
+Both parameters are **required**.
 
 If you want to use the default configuration you have two options:
 
@@ -50,6 +50,8 @@ import parseCssSortConfig from "css-prop-sort/config";
 
 sortCssProperties("a { color: blue; text-decoration: none; }", parseCssSortConfig({}));
 ```
+
+or
 
 ```js
 import sortCssProperties from "css-prop-sort";
@@ -62,20 +64,20 @@ sortCssProperties("a { color: blue; text-decoration: none; }", defaultCssSortCon
 
 Requires any browser with ES6 support.
 
-You can either import the library directly from a CDN like UNPKG or jsDeliver, download it yourself, or use a bundling tool such as Webpack or Parcel.
+You can either import the library directly from a CDN like UNPKG or jsDeliver, download & host it yourself, or use a bundling tool such as Webpack or Parcel.
 
 The API is the same as the Node.JS one.
 
 ## Configuration
 
-| Property | Description | Type | Default |
+| Property | Description | TypeScript-Style Type | Default |
 | --- | --- | --- | --- |
 | `extend` | NPM package containging configuration to extend. Alternatively, this may be a boolean. `true` to extend the default configuration. `false` to write this configuration from scratch. | `boolean \| string` | `true` |
-| `comment` | Function to generate comments. Alternatively, this may be an array with two items: what to put before the comment, and what to put after. (Note that arrays are not supported with `extend: false`. Array example: `["\n/* "," *\/"]`. | `((group: string, config: RawConfig) => string) \| [string, string]` | `(group, { groups }) => (group === groups[1][0] ? "" : "\n/* "+ group" *\/")` |
+| `comment` | Function to generate comments. Alternatively, this may be an array with two items: what to put before the comment, and what to put after. (Note that arrays are not supported with `extend: false`.) Array example: `["\n/* "," *\/"]`. | `((group: string, config: RawConfig) => string) \| [string, string]` | `(group, { groups }) => (group === groups[1][0] ? "" : "\n/* " + group + " *\/")` |
 | `defaultGroup` | The default group to put properties in if they don't fit in any other. | `string` | `"miscellaneous"` |
-| `glob` | Options to pass on to [globby](https://npmjs.com/package/globby/). Note that some options are not allowed to be overriden. | `Omit<GlobbyOptions, \| "absolute" \| "onlyFiles" \| "unique" \| "markDirectories" \| "objectMode" \| "onlyDirectories" \| "stats">` | `{ dot: true, gitignore: true }` |
-| `groups` | The groups to orginize the properties in. Each element of the array is another array of two elements. The first is the name of the group. The second is an array of properties this group contains. You may use a wildcard at the end of property names only. You may configure the wildcard used in the `config.wildcard` property. Important note for if `extend` is `false`: Math with 0 is weird, and since array indexes start at 0, the first element in the array must be `["", []]` so I can avoid that weird math xD. This is taken care of for you if `extend` is not `false`. | `[string, string[]][]` | _See https://github.com/RedGuy12/css-prop-sort/blob/main/src/config.default.js#L13-L174_ |
-| `wildcard` | Wildcard used in the groups. Must not contain alphanumeric characters, underscores, or dashes. | `string` | `"*"` |
+| `glob` | Options to pass on to [globby](https://npmjs.com/package/globby/). Note that some options are not allowed to be overriden. | `Omit<GlobbyOptions, "absolute" \| "onlyFiles" \| "unique" \| "markDirectories" \| "objectMode" \| "onlyDirectories" \| "stats">` | `{ dot: true, gitignore: true }` |
+| `groups` | The groups to orginize the properties in. Each element of the array is another array of two elements. The first is the name of the group. The second is an array of properties this group contains. You may use a wildcard at the end of property names only. You may configure the wildcard used in the `config.wildcard` property. See an example at the link over there 👉. (Important note for if `extend` is `false`: Math with 0 is weird, and since array indexes start at 0, the first element in the array must be `["", []]` so I can avoid that weird math xD. This is taken care of for you if `extend` is not `false`.) | `[string, string[]][]` | _See https://github.com/RedGuy12/css-prop-sort/blob/main/src/config.default.js#L13-L174_ |
+| `wildcard` | Wildcard used in the groups. Must not contain alphanumeric characters, underscores, or dashes. May be multiple characters long of desired. | `string` | `"*"` |
 
 ### Bonus tip
 

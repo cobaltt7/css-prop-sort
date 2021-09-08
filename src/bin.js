@@ -30,7 +30,7 @@ async function loadJsonOrJs(fileName) {
 		case ".js":
 		case ".mjs":
 		case ".cjs":
-			return import(fileName);
+			return (await import(fileName)).default;
 
 		default:
 			yargs.showHelp("error");
@@ -47,12 +47,11 @@ async function loadJsonOrJs(fileName) {
  * @returns {any | undefined | Promise<any>} - The loaded file.
  */
 function loadFileByFileName(file) {
-	const configPath = findUp.sync(file, {
-			allowSymlinks: false,
-		}),
-		nothing = undefined;
+	const nothing = undefined;
 
-	if (configPath) {
+	if (findUp.sync(file, {
+		allowSymlinks: false,
+	})) {
 		try {
 			return loadJsonOrJs(file);
 		} catch {}
