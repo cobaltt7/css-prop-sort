@@ -1,6 +1,6 @@
 {
 	"name": "css-prop-sort",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "CLI to easily sort your CSS properties",
 	"keywords": [
 		"css",
@@ -90,7 +90,6 @@
 		"yargs": "^17.1.1"
 	},
 	"devDependencies": {
-		"@onedotprojects/eslint-plugin": "^2.2.0",
 		"@types/node": "^16.7.10",
 		"@types/yargs": "^15.0.14",
 		"eslint": "^7.32.0",

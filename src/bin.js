@@ -44,16 +44,16 @@ async function loadJsonOrJs(fileName) {
  *
  * @param {string} file - File name to look for and load.
  *
- * @returns {any | undefined | Promise<any>} - The loaded file.
+ * @returns {Promise<any | undefined | any>} - The loaded file.
  */
-function loadFileByFileName(file) {
+async function loadFileByFileName(file) {
 	const nothing = undefined;
 
 	if (findUp.sync(file, {
 		allowSymlinks: false,
 	})) {
 		try {
-			return loadJsonOrJs(file);
+			return await loadJsonOrJs(file);
 		} catch {}
 	}
 
@@ -92,8 +92,8 @@ async function main() {
 	const CONFIG = await generateConfig(
 		configFile
 			? await loadJsonOrJs(path.resolve(process.cwd(), configFile))
-			: loadFileByFileName("package.json")?.cssPropSort ||
-					loadFileByFileName("cssPropSort.config.json") ||
+			: (await loadFileByFileName("package.json"))?.cssPropSort ||
+					(await loadFileByFileName("cssPropSort.config.json")) ||
 					(await loadFileByFileName("cssPropSort.config.js")) ||
 					(await loadFileByFileName("cssPropSort.config.cjs")) ||
 					(await loadFileByFileName("cssPropSort.config.mjs")) ||
