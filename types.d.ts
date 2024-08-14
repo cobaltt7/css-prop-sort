@@ -49,7 +49,7 @@ export interface RawConfig {
 	 * start at 0, the first element in the array must be `["", []]` so I can avoid that weird math
 	 * xD. This is taken care of for you if `extend` is not `false`.
 	 *
-	 * See https://github.com/RedGuy12/css-prop-sort/blob/main/src/config.default.js#L13-L174 for
+	 * See https://github.com/cobaltt7/css-prop-sort/blob/main/src/config.default.js#L13-L174 for
 	 * default values.
 	 */
 	groups: RawConfigTypes.groups;
