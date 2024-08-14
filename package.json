@@ -9,11 +9,11 @@
 		"cli"
 	],
 	"bugs": {
-		"url": "https://github.com/RedGuy12/css-prop-sort/issues",
+		"url": "https://github.com/cobaltt7/css-prop-sort/issues",
 		"email": "paul@reid-family.org"
 	},
 	"license": "MIT",
-	"author": "RedGuy12",
+	"author": "cobaltt7",
 	"main": "src/index.js",
 	"bin": {
 		"css-prop-sort": "src/bin.js"
