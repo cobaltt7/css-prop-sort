@@ -4674,9 +4674,9 @@
 			}
 		},
 		"node_modules/@types/yargs": {
-			"version": "15.0.14",
-			"resolved": "https://registry.npmjs.org/@types/yargs/-/yargs-15.0.14.tgz",
-			"integrity": "sha512-yEJzHoxf6SyQGhBhIYGXQDSCkJjB6HohDShto7m8vaKg9Yp0Yn8+71J9eakh2bnPg6BfsH9PRMhiRTZnd4eXGQ==",
+			"version": "15.0.19",
+			"resolved": "https://registry.npmjs.org/@types/yargs/-/yargs-15.0.19.tgz",
+			"integrity": "sha512-2XUaGVmyQjgyAZldf0D0c14vvo/yv0MhQBSTJcejMMaitsn3nxCB6TmH4G0ZQf+uxROOa9mpanoSm8h6SG/1ZA==",
 			"dev": true,
 			"dependencies": {
 				"@types/yargs-parser": "*"
@@ -18935,9 +18935,9 @@
 			}
 		},
 		"@types/yargs": {
-			"version": "15.0.14",
-			"resolved": "https://registry.npmjs.org/@types/yargs/-/yargs-15.0.14.tgz",
-			"integrity": "sha512-yEJzHoxf6SyQGhBhIYGXQDSCkJjB6HohDShto7m8vaKg9Yp0Yn8+71J9eakh2bnPg6BfsH9PRMhiRTZnd4eXGQ==",
+			"version": "15.0.19",
+			"resolved": "https://registry.npmjs.org/@types/yargs/-/yargs-15.0.19.tgz",
+			"integrity": "sha512-2XUaGVmyQjgyAZldf0D0c14vvo/yv0MhQBSTJcejMMaitsn3nxCB6TmH4G0ZQf+uxROOa9mpanoSm8h6SG/1ZA==",
 			"dev": true,
 			"requires": {
 				"@types/yargs-parser": "*"
